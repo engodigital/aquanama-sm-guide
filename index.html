@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Social Media — Aquanama</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:       #1a3a5c;
+      --blue-light: #2a5a8a;
+      --sand:       #f5f0e8;
+      --sand-dark:  #ede5d8;
+      --white:      #ffffff;
+      --text:       #1a2733;
+      --muted:      #5a6a7a;
+      --accent:     #4a9ac4;
+      --border:     #d0dce8;
+      --green:      #2a8a5a;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: #eef2f6;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* ─── Page wrapper ─── */
+    .page {
+      max-width: 780px;
+      margin: 32px auto;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(26,58,92,0.12);
+    }
+
+    /* ─── Header ─── */
+    .doc-header {
+      background: var(--blue);
+      color: var(--white);
+      padding: 40px 48px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .doc-header::after {
+      content: "〜〜〜";
+      position: absolute;
+      bottom: -8px;
+      right: 32px;
+      font-size: 48px;
+      opacity: 0.08;
+      letter-spacing: 4px;
+    }
+    .doc-header .brand {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .doc-header .subtitle {
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    .doc-header .meta {
+      margin-top: 20px;
+      font-size: 12px;
+      opacity: 0.55;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── Body content ─── */
+    .doc-body {
+      padding: 40px 48px 48px;
+    }
+
+    /* ─── Section ─── */
+    .section {
+      margin-bottom: 48px;
+    }
+    .section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+    .section-number {
+      background: var(--blue);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── Instruction note ─── */
+    .instruction {
+      background: #edf4fb;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .instruction strong {
+      color: var(--blue);
+    }
+
+    /* ─── Copy group (wrapper para box + botón) ─── */
+    .copy-group {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    /* ─── Copy box ─── */
+    .copy-box {
+      background: var(--sand);
+      border: 1.5px solid var(--sand-dark);
+      border-radius: 8px;
+      padding: 20px 24px;
+      padding-right: 100px; /* espacio para el botón */
+      font-size: 13.5px;
+      line-height: 1.75;
+      color: var(--text);
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+
+    /* ─── Copy button ─── */
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover {
+      background: var(--blue-light);
+    }
+    .copy-btn:active {
+      transform: scale(0.96);
+    }
+    .copy-btn.copied {
+      background: var(--green);
+    }
+
+    /* ─── Copy label ─── */
+    .copy-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    /* ─── Version badge ─── */
+    .version-badge {
+      display: inline-block;
+      background: var(--blue-light);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* ─── Highlights grid ─── */
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .highlight-card {
+      background: var(--sand);
+      border: 1.5px solid var(--sand-dark);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .highlight-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .highlight-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .highlight-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--blue);
+    }
+    .highlight-rules {
+      list-style: none;
+      padding: 0;
+    }
+    .highlight-rules li {
+      font-size: 12.5px;
+      color: var(--text);
+      padding: 5px 0;
+      border-bottom: 1px solid var(--sand-dark);
+      line-height: 1.4;
+    }
+    .highlight-rules li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .highlight-rules li::before {
+      content: "→ ";
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    /* ─── Print styles ─── */
+    @media print {
+      body { background: white; }
+      .page {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      .copy-btn { display: none; }
+      .copy-box { padding-right: 24px; }
+      .section { page-break-inside: avoid; }
+      .highlights-grid { page-break-inside: avoid; }
+      .copy-group { page-break-inside: avoid; }
+      @page {
+        margin: 18mm 15mm;
+        size: A4;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <div class="doc-header">
+    <div class="brand">Aquanama</div>
+    <div class="subtitle">Guía Operativa · Social Media</div>
+    <div class="meta">Versión 1.0 &nbsp;·&nbsp; Mayo 2026 &nbsp;·&nbsp; Uso interno</div>
+  </div>
+
+  <!-- ── BODY ── -->
+  <div class="doc-body">
+
+    <!-- SECCIÓN 1: BIO -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">01</span>
+        <span class="section-title">Bio — Instagram &amp; Facebook</span>
+      </div>
+
+      <div class="instruction">
+        <strong>Cómo usarla:</strong> Copia y pega el texto tal cual en la sección "Bio" del perfil de Instagram y Facebook. No modificar el texto. Si la plataforma limita caracteres, elimina primero el emoji final.
+      </div>
+
+      <div class="copy-label">Texto de bio (copiar y pegar)</div>
+      <div class="copy-group">
+        <div class="copy-box" id="copy-bio">Water. Panorama. Aquanama. 🌊 Where the Atlantic isn't a backdrop, it's the point
+Cocktails & Tapas with the waves at your feet
+👉🏼 No reservations, just walk in</div>
+        <button class="copy-btn" onclick="copyGroup(this)">📋 Copiar</button>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- SECCIÓN 2: FOOTERS -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">02</span>
+        <span class="section-title">Footers de Posts</span>
+      </div>
+
+      <div class="instruction">
+        <strong>Cómo usarlos:</strong> Añade uno de estos footers al final de cada publicación, <strong>alternando entre Versión 1 y Versión 2</strong>. Funcionan con cualquier tipo de contenido. Su función es doble: posicionamiento por palabras clave (hashtags constantes) y CTA uniforme para anuncios de interacción. No modificar los hashtags ni la estructura.
+      </div>
+
+      <!-- V1 -->
+      <div class="version-badge">Versión 1</div>
+      <div class="copy-group">
+        <div class="copy-box" id="copy-footer1">The Atlantic isn't a backdrop, it's the point. Come feel the spray with a handcrafted cocktail in hand and blues in the air.
+
+📍 Playa San Telmo, Puerto de la Cruz
+🎶 Blues vibes & Ocean views
+🕰️ Open every day: 12:00 – 23:00
+🚫 No reservations: the ocean is waiting for you
+
+🔗 Link in Bio
+
+#OceanVibes #TenerifeCocktails #PlayaSanTelmo</div>
+        <button class="copy-btn" onclick="copyGroup(this)">📋 Copiar</button>
+      </div>
+
+      <!-- V2 -->
+      <div class="version-badge">Versión 2</div>
+      <div class="copy-group">
+        <div class="copy-box" id="copy-footer2">Some places have a view. Aquanama has the ocean.
+Come for the handcrafted cocktails, stay for the sound of the waves breaking at your feet.
+
+📍 Playa San Telmo, Puerto de la Cruz
+🌊 The only spot where the Atlantic is the main event
+🎶 Blues music & sunset vibes
+🕰️ Open Daily: 12:00 – 23:00
+🚶 No reservations, just walk in
+
+🔗 Link in Bio
+
+#Aquanama #PuertoDeLaCruz #OceanVibes #TenerifeBar #LiveTheAtlantic</div>
+        <button class="copy-btn" onclick="copyGroup(this)">📋 Copiar</button>
+      </div>
+
+      <div class="instruction" style="margin-top:4px; margin-bottom:0;">
+        <strong>Patrón de alternancia:</strong> Post 1 → V1 &nbsp;·&nbsp; Post 2 → V2 &nbsp;·&nbsp; Post 3 → V1 &nbsp;·&nbsp; Post 4 → V2… y así sucesivamente.
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- SECCIÓN 3: HISTORIAS DESTACADAS -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">03</span>
+        <span class="section-title">Historias Destacadas</span>
+      </div>
+
+      <div class="instruction">
+        <strong>Cómo gestionarlas:</strong> Hay 4 categorías activas. Añade nuevas historias a la categoría correspondiente cuando publiques contenido relevante.
+      </div>
+
+      <div class="highlights-grid">
+
+        <div class="highlight-card">
+          <div class="highlight-card-header">
+            <span class="highlight-icon">🍹</span>
+            <span class="highlight-name">Cocktail</span>
+          </div>
+          <ul class="highlight-rules">
+            <li>Fotos y videos de cócteles artesanales</li>
+            <li>Primeros planos con buena iluminación natural</li>
+            <li>Stories de preparación o presentación</li>
+            <li>Añadir cuando publiques contenido de bebidas</li>
+          </ul>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-card-header">
+            <span class="highlight-icon">🥗</span>
+            <span class="highlight-name">Tapas</span>
+          </div>
+          <ul class="highlight-rules">
+            <li>Fotos y videos de tapas del menú</li>
+            <li>Platos servidos en terraza (fondo oceánico ideal)</li>
+            <li>Incorporar cuando haya novedades de carta</li>
+            <li>Eliminar platos que ya no estén en el menú</li>
+          </ul>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-card-header">
+            <span class="highlight-icon">🌊</span>
+            <span class="highlight-name">Location</span>
+          </div>
+          <ul class="highlight-rules">
+            <li>Vistas del Atlántico, terraza y ambiente</li>
+            <li>Atardeceres, olas, panorámicas del local</li>
+            <li>Priorizar imágenes de alta calidad visual</li>
+            <li>Es la categoría más importante — mantenerla activa</li>
+          </ul>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-card-header">
+            <span class="highlight-icon">🕰️</span>
+            <span class="highlight-name">Orari</span>
+          </div>
+          <ul class="highlight-rules">
+            <li>Horarios de apertura actualizados</li>
+            <li>Cambios estacionales o festivos</li>
+            <li>Actualizarlo cada vez que cambien los horarios</li>
+            <li>Mantener solo la story más reciente</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /doc-body -->
+
+</div><!-- /page -->
+
+<script>
+  function copyGroup(btn) {
+    const box = btn.previousElementSibling;
+    navigator.clipboard.writeText(box.innerText).then(function () {
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(function () {
+        btn.textContent = '📋 Copiar';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
